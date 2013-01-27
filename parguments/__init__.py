@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 
 __author__ = 'whtsky'
 __version__ = '0.1'
 
 import sys
+import inspect
 from docopt import docopt
+from .cli import *
 
 
 class Command(object):
@@ -21,7 +24,8 @@ class Command(object):
 
 
 class Parguments(object):
-    def __init__(self, doc, *args, **kwargs):
+    def __init__(self, doc, argv=None, help=True, version=None,
+                 options_first=False):
         """
         Init a new parguments instance.
         Note that parguments uses [docopt](https://github.com/docopt/docopt)
@@ -31,8 +35,10 @@ class Parguments(object):
 
         """
         self.doc = doc
-        self._args = args
-        self._kwargs = kwargs
+        self._argv = argv
+        self._help = help
+        self._version = version
+        self._options_first = options_first
         self._commands = {}
 
     def command(self, func):
@@ -58,16 +64,25 @@ class Parguments(object):
         name = name or func.__name__
         self._commands[name] = command
 
+    def parse(self, doc):
+        args = docopt(doc, self._argv, self._help, self._version,
+            self._options_first)
+        return args
+
     def run(self, default_command=''):
         command = default_command
         if len(sys.argv) > 1:
             command = sys.argv[1]
 
         if command in self._commands:
-            args = docopt(self._commands[command].doc,
-                *self._args, **self._kwargs)
-            result = self._commands[command](args=args)
+            command = self._commands[command]
+            if not inspect.getargspec(command).args:
+                # Seemed that command doesn't want any argument.
+                result = command()
+            else:
+                args = self.parse(command.doc)
+                result = command(args=args)
         else:
-            docopt(self.doc, *self._args, **self._kwargs)
+            self.parse(self.doc)
             result = 0
         sys.exit(result or 0)
