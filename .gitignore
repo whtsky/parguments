@@ -39,3 +39,5 @@ nosetests.xml
 
 #OS X
 .DS_Store
+
+docs/_build

@@ -2,7 +2,7 @@
 from __future__ import absolute_import
 
 __author__ = 'whtsky'
-__version__ = '0.1'
+__version__ = '0.2'
 
 import sys
 import inspect
@@ -14,7 +14,7 @@ class Command(object):
     """
     Base class for creating commands.
     """
-    def __init__(self, func, doc=''):
+    def __init__(self, func, doc=None):
         self._func = func
         description = doc or func.__doc__
         self.doc = description.strip()
@@ -51,13 +51,13 @@ class Parguments(object):
         command = Command(func)
         self._commands[func.__name__] = command
 
-    def add_command(self, func, name='', doc=''):
+    def add_command(self, func, name=None, doc=None):
         """
         Add a command function to the registry.
 
         :param func: command function.
-        :param name: name of command.func.__name__ by default.
-        :param doc: description of the func.func.__doc__ by default.
+        :param name: default name of func.
+        :param doc: description of the func.default docstring of func.
 
         """
         command = Command(func, doc)
@@ -69,20 +69,28 @@ class Parguments(object):
             self._options_first)
         return args
 
-    def run(self, default_command=''):
-        command = default_command
-        if len(sys.argv) > 1:
-            command = sys.argv[1]
+    def run(self, command=None, default_command=None, fallback=None):
+        """
+        Parse arguments and run the funcs.
 
-        if command in self._commands:
-            command = self._commands[command]
-            if not inspect.getargspec(command).args:
+        :param command: name of command to run. default sys.argv[1]
+        :param default_command: name of default command to run
+            if no arguments passed.
+        :param fallback: if no command is found, we'll call this func.
+        """
+        args = self.parse(self.doc)
+        result = 0
+        cmd = args.get(command, default_command)
+        if command is None and len(sys.argv) > 1:
+            cmd = sys.argv[1]
+
+        if cmd in self._commands:
+            cmd = self._commands[cmd]
+            if not inspect.getargspec(cmd._func).args:
                 # Seemed that command doesn't want any argument.
-                result = command()
+                result = cmd()
             else:
-                args = self.parse(command.doc)
-                result = command(args=args)
-        else:
-            self.parse(self.doc)
-            result = 0
+                result = cmd(args=args)
+        elif fallback:
+            fallback(cmd, args)
         sys.exit(result or 0)
