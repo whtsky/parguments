@@ -64,8 +64,10 @@ class Parguments(object):
         name = name or func.__name__
         self._commands[name] = command
 
-    def parse(self, doc):
-        args = docopt(doc, self._argv, self._help, self._version,
+    def parse(self, doc, help=None):
+        if help is None:
+            help = self._help
+        args = docopt(doc, self._argv, help, self._version,
             self._options_first)
         return args
 
@@ -78,7 +80,7 @@ class Parguments(object):
             if no arguments passed.
         :param fallback: if no command is found, we'll call this func.
         """
-        args = self.parse(self.doc)
+        args = self.parse(self.doc, help=False)
         result = 0
         cmd = args.get(command, default_command)
         if command is None and len(sys.argv) > 1:
@@ -93,4 +95,6 @@ class Parguments(object):
                 result = cmd(args=args)
         elif fallback:
             fallback(cmd, args)
+        else:
+            self.parse(self.doc)
         sys.exit(result or 0)

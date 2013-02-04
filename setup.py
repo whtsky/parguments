@@ -20,9 +20,6 @@ setup(
     packages=find_packages(),
     description='Parguments: A simple cli args parser for Python',
     long_description=open('README.rst').read(),
-    install_requires=[
-        'docopt==0.6.0'
-    ],
     include_package_data=True,
     license='MIT',
     classifiers=[
