@@ -6,7 +6,7 @@ __version__ = '0.2'
 
 import sys
 import inspect
-from docopt import docopt
+from .docopt import docopt
 from .cli import *
 
 
