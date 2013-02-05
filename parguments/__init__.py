@@ -2,7 +2,7 @@
 from __future__ import absolute_import
 
 __author__ = 'whtsky'
-__version__ = '0.2'
+__version__ = '0.2.1'
 
 import sys
 import inspect

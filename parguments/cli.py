@@ -96,8 +96,7 @@ def prompt_bool(name, default=False, yes_choices=None, no_choices=None):
             return False
 
 
-def prompt_choices(name, choices, default=None, resolve=string.lower,
-                   no_choice=('none',)):
+def prompt_choices(name, choices, default=None, no_choice=('none',)):
     """
     Grabs user input from command line from set of provided choices.
 
@@ -123,7 +122,7 @@ def prompt_choices(name, choices, default=None, resolve=string.lower,
         rv = prompt(name + '? - (%s)' % ', '.join(options), default)
         if not rv:
             return default
-        rv = resolve(rv)
+        rv = rv.lower()
         if rv in no_choice:
             return None
         if rv in _choices:
