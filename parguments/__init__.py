@@ -68,7 +68,7 @@ class Parguments(object):
         if help is None:
             help = self._help
         args = docopt(doc, self._argv, help, self._version,
-            self._options_first)
+                      self._options_first)
         return args
 
     def run(self, command=None, default_command=None, fallback=None):
