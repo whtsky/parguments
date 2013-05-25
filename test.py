@@ -68,6 +68,7 @@ def test_adding_commands():
 
     try:
         p.run(argv=["remove", "wordpress"])
+        p.run(command="remove", argv=["remove catsup"])
     except SystemExit:
         pass
     else:
@@ -257,6 +258,11 @@ def test_prompt_choices():
         if "via" in msg:
             return 'cd'
 
+    @Catcher
+    def choose_none(msg):
+        if "via" in msg:
+            return 'none'
+
     with choose_default:
         out = run('parguments remove a', parguments.run)
         assert 'remove via? - (rsync, cd) [rsync]: rsync' in out
@@ -268,3 +274,7 @@ def test_prompt_choices():
     with choose_cd:
         out = run('parguments add a', parguments.run)
         assert 'add via? - (rsync, cd): cd' in out
+
+    with choose_none:
+        out = run('parguments add a', parguments.run)
+        assert 'add via? - (rsync, cd): None' in out

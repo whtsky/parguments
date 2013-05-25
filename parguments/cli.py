@@ -117,8 +117,6 @@ def prompt_choices(name, choices, default=None, no_choice=('none',)):
 
     while True:
         rv = prompt(name + '? - (%s)' % ', '.join(options), default)
-        if not rv:
-            return default
         rv = rv.lower()
         if rv in no_choice:
             return None
