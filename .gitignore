@@ -41,3 +41,7 @@ nosetests.xml
 .DS_Store
 
 docs/_build
+
+#Virtualenv
+.Python
+include/

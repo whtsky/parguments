@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2010 by Dan Jacob.
 #
 # Some rights reserved.

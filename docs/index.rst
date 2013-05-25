@@ -6,16 +6,6 @@
 Parguments
 ======================================
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-
-
-
-API
----
-
 .. module:: parguments
 
 .. autoclass:: Parguments
