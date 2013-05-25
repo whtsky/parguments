@@ -56,6 +56,8 @@ def test_adding_commands():
     assert 'remove' in p._commands
 
     p.run(argv=["add", "catsup"], exit=False)
+    p.run(command="add", argv=["remove", "catsup"], exit=False)
+
     import sys
     sys.argv[1:] = ["add", "catsup"]
 
@@ -63,7 +65,6 @@ def test_adding_commands():
 
     try:
         p.run(argv=["remove", "wordpress"])
-        p.run(command="add", argv=["remove catsup"])
     except SystemExit:
         pass
     else:

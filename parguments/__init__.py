@@ -167,7 +167,7 @@ class Parguments(object):
         if command is None and len(sys.argv) > 1:
             cmd = argv[0]
         else:
-            cmd = args.get(command, "")
+            cmd = args.get(command, None)
 
         if cmd in self._commands:
             cmd = self._commands[cmd]
