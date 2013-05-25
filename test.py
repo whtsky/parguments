@@ -5,7 +5,8 @@ Usage:
 """
 
 import sys
-import StringIO
+
+from io import StringIO
 
 from parguments import Parguments
 from parguments.cli import *
