@@ -33,6 +33,14 @@
 import getpass
 
 
+try:
+    assert raw_input
+    assert basestring
+except NameError:
+    raw_input = input
+    basestring = str
+
+
 def prompt(name, default=None):
     """
     Grab user input from command line.
