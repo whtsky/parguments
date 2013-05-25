@@ -14,7 +14,7 @@ setup(
     url='https://github.com/whtsky/parguments',
     packages=find_packages(),
     description='Parguments: A simple cli args parser for Python',
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     include_package_data=True,
     install_requires=['docopt>=0.6.1'],
     license='MIT',
