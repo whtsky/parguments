@@ -1,0 +1,34 @@
+#!/bin/bash
+
+function failCommit() {
+    tput setaf 1
+    echo "----------------------------------------"
+    echo "FATAL ERROR: $1"
+    echo "----------------------------------------"
+    tput sgr0
+    exit 1
+}
+
+echo 'Running flake8...'
+result=$(flake8 parguments)
+if [ $? != 0 ]; then
+    echo "$result"
+    echo ''
+    echo 'lint fail'
+    lintFailed=1
+    failCommit "Lint Errors"
+fi
+
+echo 'Running Tests...'
+result=$(nosetests)
+if [ $? != 0 ]; then
+    echo "$result"
+    echo ''
+    echo 'Tests fail'
+    testsFailed=1
+    failCommit "Test Errors"
+fi
+
+if [[ $testsFailed || $lintFailed ]]; then
+    failCommit "Unable To Commit"
+fi

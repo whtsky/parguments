@@ -5,7 +5,7 @@ Usage:
 """
 
 from parguments import Parguments
-from parguments.utils import *
+from parguments.utils import remove_indentation, count_indentation
 
 
 def test_utils():

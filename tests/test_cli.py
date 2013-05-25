@@ -9,7 +9,7 @@ import sys
 from io import StringIO
 
 from parguments import Parguments
-from parguments.cli import *
+from parguments.cli import prompt, prompt_choices, prompt_bool
 
 
 class Catcher(object):

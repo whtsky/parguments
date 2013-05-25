@@ -3,7 +3,6 @@ from __future__ import absolute_import
 
 import sys
 from docopt import docopt
-from .cli import *
 from .utils import remove_indentation
 
 
