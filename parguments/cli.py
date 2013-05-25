@@ -35,10 +35,8 @@ import getpass
 
 try:
     assert raw_input
-    assert basestring
 except NameError:
     raw_input = input
-    basestring = str
 
 
 def prompt(name, default=None):
@@ -93,8 +91,6 @@ def prompt_bool(name, default=False, yes_choices=None, no_choices=None):
 
     while True:
         rv = prompt(name + '?', default and yes_choices[0] or no_choices[0])
-        if not rv:
-            return default
         if rv.lower() in yes_choices:
             return True
         elif rv.lower() in no_choices:
@@ -106,8 +102,7 @@ def prompt_choices(name, choices, default=None, no_choice=('none',)):
     Grabs user input from command line from set of provided choices.
 
     :param name: prompt text
-    :param choices: list or tuple of available choices. Choices may be
-                    single strings or (key, value) tuples.
+    :param choices: list or tuple of available choices.
     :param default: default value if no input provided.
     :param no_choice: acceptable list of strings for "null choice"
     """
@@ -116,11 +111,7 @@ def prompt_choices(name, choices, default=None, no_choice=('none',)):
     options = []
 
     for choice in choices:
-        if isinstance(choice, basestring):
-            options.append(choice)
-        else:
-            options.append("%s [%s]" % (choice[1], choice[0]))
-            choice = choice[0]
+        options.append(choice)
         _choices.append(choice)
 
     while True:
