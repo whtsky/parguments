@@ -69,3 +69,10 @@ def test_adding_commands():
         pass
     else:
         raise
+
+
+def test_help():
+    p = Parguments(__doc__)
+
+    assert p.run(argv=['-h'], exit=False) == 0
+    assert p.run(argv=['--help'], exit=False) == 0

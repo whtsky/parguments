@@ -130,11 +130,11 @@ class Parguments(object):
         self._commands[name] = command
 
     def parse(self, doc, argv, help, first=False):
-        if first and argv not in [['-h'], ['--help']]:
-            argv = [x for x in argv if x not in ['-h', '--help']]
-        args = docopt(doc, argv, help, self._version,
+        if first and argv in [['-h'], ['--help']]:
+            print(doc)
+            return {}
+        return docopt(doc, argv, help, self._version,
                       self._options_first)
-        return args
 
     def process_args(self, args):
         kwargs = {}
