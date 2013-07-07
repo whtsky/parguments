@@ -115,6 +115,7 @@ class Parguments(object):
         """
         command = Command(func)
         self._commands[func.__name__] = command
+        return func
 
     def add_command(self, func, name=None, doc=None):
         """

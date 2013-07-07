@@ -73,7 +73,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='parguments',
-    version='0.3.1',
+    version='0.3.2',
     author='whtsky',
     author_email='whtsky@me.com',
     url='https://github.com/whtsky/parguments',

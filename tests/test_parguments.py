@@ -76,3 +76,17 @@ def test_help():
 
     assert p.run(argv=['-h'], exit=False) == 0
     assert p.run(argv=['--help'], exit=False) == 0
+
+
+def test_return():
+    p = Parguments(__doc__)
+
+    @p.command
+    def add(name):
+        """
+        Usage:
+            parguments add <name>
+        """
+        return name
+
+    assert add("5") == "5"
